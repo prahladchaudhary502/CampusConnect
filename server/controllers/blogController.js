@@ -11,7 +11,7 @@ export const addBlog = async (req, res)=> {
 
         //check if all fields are present
         if(!title || !description || !category || !imageFile) {
-            return res.JSON({success: false, message: "Missing required fields" })
+            return res.json({success: false, message: "Missing required fields" })
         }
 
         const fileBuffer = fs.readFileSync(imageFile.path)
@@ -72,6 +72,10 @@ export const deleteBlogById = async (req, res)=> {
     try {
         const { id } = req.body;
         await Blog.findByIdAndDelete(id);
+
+        // Delete all comments associated with the blog
+        await Comment.deleteMany({blog: id});
+
         res.json({success: true, message: 'Blog deleted successfully'})
     }
     catch(error) {
@@ -97,6 +101,18 @@ export const addComment = async (req, res)=> {
         const { blog, name, content } = req.body;
         await Comment.create({blog, name, content});
         res.json({success: true, message: 'Comment added for review'})
+    }
+    catch(error) {
+        res.json({success: false, message: error.message})
+    }
+}
+
+export const getBlogComments = async (req, res)=> {
+    try {
+        const {blogId } = req.body;
+        const comments = await Comment.find({blog: blogId,isApproved: true}).sort
+        ({createdAt: -1});
+        res.json({success: true, comments})
     }
     catch(error) {
         res.json({success: false, message: error.message})
