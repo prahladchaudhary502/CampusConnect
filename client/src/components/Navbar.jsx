@@ -1,9 +1,10 @@
 import React from 'react'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { useAppContext } from '../../context/AppContext';
 
 const Navbar = () => {
-    const navigate = useNavigate();
+    const{navigate, token} = useAppContext()
 
   return (
     <div className='flex justify-between items-center by-5 mx-8 sm:mx-20 xl:mx-32'>
@@ -20,7 +21,7 @@ const Navbar = () => {
     shadow-md hover:shadow-lg
     active:scale-95
   '>
-    Login
+    {token ? 'Dashboard' : 'Login'}
     <img src={assets.arrow} className='w-3 mt-0.5' alt="arrow" />
   </button>
 </div>
