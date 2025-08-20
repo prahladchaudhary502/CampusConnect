@@ -1,14 +1,18 @@
 import jwt from "jsonwebtoken";
 
-const auth = (req, res, next)=>{
-    const token = req.headers.authorization;
-
-    try{
-        jwt.verify(token, process.env.JWT_SECRET)
-        next();
+const auth = (req, res, next) => {
+    const token = req.cookies?.token;
+    
+    if (!token) {
+        return res.status(401).json({ success: false, message: "No token, please login" });
     }
-    catch (error) {
-        res.json({success: false, message: "Invalid token"})
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded; 
+        next()
+    } catch (error) {
+        return res.status(403).json({ success: false, message: "Invalid or expired token" });
     }
 }
 
