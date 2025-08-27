@@ -1,9 +1,9 @@
 
 ***
 
-# Campus Fonnect
+# CampusConnect
 
-**Campus Fonnect** is a full-stack MERN web application built to connect campus communities via blogs, notices, and threaded comments. It features user roles (student, faculty, admin, moderator, alumni), approval workflows for posts, and a real-time interactive comment system with both authenticated and guest support.
+**Campus Connect** is a full-stack MERN web application built to connect campus communities via blogs, notices, and threaded comments. It features user roles (student, faculty, admin, moderator, alumni), approval workflows for posts, and a real-time interactive comment system with both authenticated and guest support.
 
 ***
 
